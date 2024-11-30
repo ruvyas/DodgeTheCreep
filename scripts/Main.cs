@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Main : Node
 {
@@ -11,7 +10,6 @@ public partial class Main : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,28 +21,59 @@ public partial class Main : Node
 	{
 		GetNode<Timer>("MobTimer").Stop();
 		GetNode<Timer>("ScoreTimer").Stop();
+		GetNode<Hud>("HUD").ShowGameOver();
+		GetNode<AudioStreamPlayer>("Music").Stop();
+		GetNode<AudioStreamPlayer>("DeathSound").Play();
 	}
 
-	public void NewGame()
+	public void NewGame(string levelName)
 	{
 		_score = 0;
+		var mobTimer = GetNode<Timer>("MobTimer");
+
+		switch (levelName)
+		{
+			case "easy":
+				mobTimer.SetWaitTime(1);
+				break;
+			case "medium":
+				mobTimer.SetWaitTime(0.75);
+				break;
+			case "hard":
+				mobTimer.SetWaitTime(0.35);
+				break;
+		}
+		
+		GetTree().CallGroup("mobs", Node.MethodName.QueueFree);
+		
+		var hud = GetNode<Hud>("HUD");
+		hud.UpdateScore(_score);
+		hud.ShowMessage("Get Ready!");
 		
 		var player = GetNode<Player>("Player");
 		var startPosition = GetNode<Marker2D>("StartPosition");
 		player.Start(startPosition.Position);
 		
 		GetNode<Timer>("StartTimer").Start();
+		GetNode<AudioStreamPlayer>("Music").Play();
 	}
 
 	private void OnScoreTimerTimeout()
 	{
 		_score++;
+		GetNode<Hud>("HUD").UpdateScore(_score);
 	}
 
 	private void OnStartTimerTimeout()
 	{
 		GetNode<Timer>("MobTimer").Start();
 		GetNode<Timer>("ScoreTimer").Start();
+	}
+
+	private void SelectLevel()
+	{
+		GetNode<Hud>("HUD").HideMessage();
+		GetNode<Hud>("HUD").SetLevelUiVisibility(true);
 	}
 
 	private void OnMobTimerTimeout()

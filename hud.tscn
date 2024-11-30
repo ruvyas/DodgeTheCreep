@@ -1,0 +1,159 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvm76isw2jqn3"]
+
+[ext_resource type="Script" path="res://scripts/HUD/Hud.cs" id="1_pb75o"]
+[ext_resource type="FontFile" uid="uid://bhfidl47btc8v" path="res://fonts/Xolonium-Regular.ttf" id="1_wiy43"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_q2knk"]
+action = &"start_game"
+
+[sub_resource type="Shortcut" id="Shortcut_0b6db"]
+events = [SubResource("InputEventAction_q2knk")]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_pb75o")
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -68.0
+offset_right = 68.0
+offset_bottom = 78.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.541176, 0.0313726, 0.0156863, 1)
+theme_override_fonts/font = ExtResource("1_wiy43")
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Message" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -120.0
+offset_right = 240.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.542943, 0.0304865, 0.0174949, 1)
+theme_override_fonts/font = ExtResource("1_wiy43")
+theme_override_font_sizes/font_size = 64
+text = "Dodge the creeps!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LevelMessage" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -206.0
+offset_right = 240.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.542943, 0.0304865, 0.0174949, 1)
+theme_override_fonts/font = ExtResource("1_wiy43")
+theme_override_font_sizes/font_size = 64
+text = "Select Level"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="StartButton" type="Button" parent="."]
+layout_direction = 2
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -98.0
+offset_top = -140.0
+offset_right = 102.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.541176, 0.0313726, 0.0156863, 1)
+theme_override_fonts/font = ExtResource("1_wiy43")
+theme_override_font_sizes/font_size = 64
+shortcut = SubResource("Shortcut_0b6db")
+text = "Start"
+icon_alignment = 1
+
+[node name="EasyButton" type="Button" parent="."]
+visible = false
+layout_direction = 2
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -98.0
+offset_top = -360.0
+offset_right = 102.0
+offset_bottom = -260.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.541176, 0.0313726, 0.0156863, 1)
+theme_override_fonts/font = ExtResource("1_wiy43")
+theme_override_font_sizes/font_size = 64
+text = "Easy"
+icon_alignment = 1
+
+[node name="MediumButton" type="Button" parent="."]
+visible = false
+layout_direction = 2
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -136.0
+offset_top = -240.0
+offset_right = 139.0
+offset_bottom = -140.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.541176, 0.0313726, 0.0156863, 1)
+theme_override_fonts/font = ExtResource("1_wiy43")
+theme_override_font_sizes/font_size = 64
+text = "Medium"
+icon_alignment = 1
+
+[node name="HardButton" type="Button" parent="."]
+visible = false
+layout_direction = 2
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -136.0
+offset_top = -120.0
+offset_right = 139.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.541176, 0.0313726, 0.0156863, 1)
+theme_override_fonts/font = ExtResource("1_wiy43")
+theme_override_font_sizes/font_size = 64
+text = "Hard"
+icon_alignment = 1
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="pressed" from="StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="pressed" from="EasyButton" to="." method="OnEasyButtonPressed"]
+[connection signal="pressed" from="MediumButton" to="." method="OnMediumButtonPressed"]
+[connection signal="pressed" from="HardButton" to="." method="OnHardButtonPressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="OnMessageTimerTimeout"]
